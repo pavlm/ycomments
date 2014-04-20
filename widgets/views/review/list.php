@@ -13,7 +13,7 @@ $comments = $model->getComments();
 ?>
 
 <div class="comment-list-wrap">
-	<a name="commentblock"></a>
+	<a id="commentblock"></a>
 	<h3 class="comment-list-head">Отзывы</h3>
 
 <?
@@ -49,6 +49,7 @@ if ($model->commentsLoaded) {
 
 echo CHtml::closeTag('div');
 ?>
+</div>
 
 <script type="text/javascript">
 <!--

@@ -39,6 +39,8 @@ class YCommentsModule extends CWebModule
 	public $commentType = 'ycomments.models.Comment';
 	
 	public $notifyMailFrom;
+	
+	public $adminLayout;
 
     public function init()
     {

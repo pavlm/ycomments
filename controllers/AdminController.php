@@ -2,6 +2,12 @@
 
 class AdminController extends CController
 {
+	public function init()
+	{
+		if ($layout = $this->getModule()->adminLayout)
+			$this->layout = $layout;
+		parent::init();
+	}
 	
 	/**
 	 * @return array action filters
