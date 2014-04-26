@@ -64,6 +64,11 @@ class CommentableBehavior extends CActiveRecordBehavior
 	public $commentableUrl;
 	
 	/**
+	 * @var array
+	 */
+	public $commentCriteria;
+	
+	/**
 	 * @var array - labels override
 	 */
 	public $labels = array();
@@ -248,8 +253,11 @@ class CommentableBehavior extends CActiveRecordBehavior
 		    'condition' => "cm." . $this->mapRelatedColumn . "=:pk",
 			'params' => array(':pk'=>$this->owner->getPrimaryKey()),
 			'order' => "{$commentTableAlias}.created_at asc",
-			'with' => array('user' ),
+			'with' => array('user'),
 		));
+		
+		if ($this->commentCriteria)
+			$cr->mergeWith($this->commentCriteria);
 
 		if ($this->allowReply) {
 			$cr->with = array_merge($cr->with, array('parent'));

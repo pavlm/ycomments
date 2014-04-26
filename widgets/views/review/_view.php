@@ -12,7 +12,7 @@ $isGuest = Yii::app()->user->isGuest;
 <div class="comment" id="comment-<?php echo $comment->id; ?>">
 
 	<div class="comment__avatar-cell">
-		<? echo $user->getGravatarImg() ?>
+		<? echo $user ? $user->getGravatarImg() : '' ?>
 	</div>
 
 	<div class="comment__content-cell">

@@ -28,19 +28,22 @@ class CommentUser extends CActiveRecord
 	
 	public function relations()
 	{
-		return array(
+		$rels = array(
 			'notifyUser' => [self::HAS_MANY, 'NotifyUser', 'user_id'],
 		);
+		return array_merge($rels, $this->wrappedUser->relations());
 	}
 
 	public function getUName() {
 		$cm = Yii::app()->getModule('ycomments');
-		return $this->{$cm->userNameAttribute};
+		$attrib = $cm->userNameAttribute;
+		return is_callable($attrib) ? $attrib($this) : $this->$attrib;
 	}
 
 	public function getUEmail() {
 		$cm = Yii::app()->getModule('ycomments');
-		return $this->{$cm->userEmailAttribute};
+		$attrib = $cm->userEmailAttribute;
+		return is_callable($attrib) ? $attrib($this) : $this->$attrib;
 	}
 	
 	public function getGravatarImg($gravatarOpts=array('d' => 'identicon', 'r' => 'r', 's' => 40))

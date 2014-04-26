@@ -12,7 +12,7 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 <div id="comment-<?=intval($comment->id);?>" class="<?=$classes?>">
 
 	<div class="comment__avatar-cell">
-		<? echo $comment->user->getGravatarImg() ?>
+		<? echo $comment->user ? $comment->user->getGravatarImg() : '' ?>
 	</div>
 
 	<div class="comment__content-cell">

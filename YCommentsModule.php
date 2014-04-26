@@ -41,7 +41,7 @@ class YCommentsModule extends CWebModule
 	public $notifyMailFrom;
 	
 	public $adminLayout;
-
+	
     public function init()
     {
         // this method is called when the module is being created
