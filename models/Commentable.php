@@ -9,9 +9,12 @@ class Commentable extends CActiveRecord
 {
 	public static $commentableType;
 	
-	public function defaultScope()
+	public function scopes()
 	{
-		return ['select' => 'id'];
+		$alias = $this->getDbCriteria()->alias;
+		return array(
+			'mini' => array('select' => "id"),
+		);
 	}
 	
 	/**
@@ -86,7 +89,7 @@ class Commentable extends CActiveRecord
 	{
 		$b = $this->getCommentableBehavior();
 		if ($urlFunc = $b->commentableUrl) {
-			$data = $urlFunc($this);
+			$data = array('/asdf'); // todo: change commentableUrl
 		} else {
 			$data = '';
 		}

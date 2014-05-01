@@ -55,7 +55,7 @@ class NotifySender extends CComponent
 		$cr = $behavior->getCommentsCriteria();
 		$cr->addCondition('t.created_at > :dateFilter');
 		$cr->params['dateFilter'] = $dateFilter;
-		$cr->with = array_merge($cr->with, array('parent','items'));
+		$cr->with = array_merge($cr->with, array('parent', 'commentableItems'));
 		$cr->index = 'id';
 		$cs = $comment->findAll($cr);
 		if (empty($cs))
@@ -154,7 +154,7 @@ class NotifySender extends CComponent
 		$items = $this->getRelatedItems($cs);
 		$groups = array();
 		foreach ($cs as $c) {
-			if (!$item = $c->getItem()) continue;
+			if (!$item = $c->getCommentableItem()) continue;
 			$groups[$item->id][] = $c->id;
 		}
 
@@ -165,6 +165,8 @@ class NotifySender extends CComponent
 			'commentableType' => $this->commentableType, 'view' => 'notify',
 			'options' => ['user' => $u, 'items' => $items, 'comments' => $cs, 'groups' => $groups],
 		), true);
+		
+		$this->log($body);
 		
 		Yii::import('common.extensions.mailer.YiiMailer');
 		$mail = new YiiMailer('', ['savePath' => 'application.runtime']);
