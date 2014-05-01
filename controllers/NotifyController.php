@@ -54,7 +54,7 @@ class NotifyController extends CController
 		}
 			
 		$this->widget('common.extensions.comment-module.widgets.NotifySubscriptionWidget', 
-			['commentableType' => $nu->commentable_type]);
+			array('commentableType' => $nu->commentable_type));
 	}
 	
 	/**
@@ -82,7 +82,7 @@ class NotifyController extends CController
 		}
 
 		$this->widget('common.extensions.comment-module.widgets.NotifyItemSubscriptionWidget',
-				['commentableType' => $ns->commentable_type, 'itemId' => $ns->item_id]);
+				array('commentableType' => $ns->commentable_type, 'itemId' => $ns->item_id));
 	}
 	
 	

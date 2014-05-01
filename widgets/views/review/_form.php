@@ -84,7 +84,7 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 			$this->getCommentableBehavior()->notifySubscriptionEnabled)
 		{
 			$this->widget('comment.widgets.NotifyItemSubscriptionWidget',
-					['commentableType' => $this->commentableType, 'itemId' => $this->model->id ?: $comment->key]);
+					array('commentableType' => $this->commentableType, 'itemId' => $this->model->id ?: $comment->key));
 		}
 		?>
 		

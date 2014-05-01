@@ -28,7 +28,7 @@ if (!$this->readOnly && Yii::app()->user->checkAccess('commentator')) {
 		$this->getCommentableBehavior()->notifySubscriptionEnabled) 
 	{
 		$this->widget('comment.widgets.NotifyItemSubscriptionWidget',
-				['commentableType' => $this->commentableType, 'itemId' => $this->model->id]);
+				array('commentableType' => $this->commentableType, 'itemId' => $this->model->id));
 	}
  */	
 }

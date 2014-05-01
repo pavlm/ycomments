@@ -51,13 +51,13 @@ $form = $this->beginWidget('TbActiveFormExt', array(
 		<h3>Подписки на материалы</h3>
 		<? 
 		$this->widget('zii.widgets.CListView', 
-			[
+			array(
 				'id' => 'subs-items-'.$this->commentableType,
 				'dataProvider' => $this->subProvider, 
 				'itemView' => '_notifySubItem',
 				'emptyText' => 'нет подписок',
 				'template' => "<table> {items}\n </table> {pager}\n{summary}",
-			]);
+			));
 		?>
 	<? endif; ?> 
 </div>
