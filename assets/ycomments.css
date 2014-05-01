@@ -47,6 +47,16 @@ position:relative;
 margin-right:1em;
 }
 
+.comment__info div.star-rating {
+display:inline;
+float:none;
+}
+
+.comment__info div.star-rating a {
+display: inline-block;
+margin-right: 2px;
+}
+
 .comment__info__link {
 color:#c1c1c1;
 }
