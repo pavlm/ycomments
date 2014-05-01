@@ -76,7 +76,8 @@ class CommentUser extends CActiveRecord
 
 	public function isSubscribedAdmin($commentableType)
 	{
-		if ($this->role != 'admin') // todo: replace
+		// todo: make universal
+		if (!$this->superuser)
 			return false;
 		$nu = $this->getNotifyUserOrDefault($commentableType);
 		return $nu->notify_all;

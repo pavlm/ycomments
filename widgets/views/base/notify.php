@@ -14,7 +14,7 @@ foreach ($groups as $iid => $cids):
 
 	$item = $items[$iid];
 	echo "<p>\n";
-	echo CHtml::link($item->name, $item->getSpecUrl()), "\n";
+	echo CHtml::link($item->name, $item->getUrlData()), "\n";
 	echo "<br>", str_repeat('=', 10);
 	echo "</p>\n";
 

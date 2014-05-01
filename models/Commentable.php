@@ -44,6 +44,17 @@ class Commentable extends CActiveRecord
 		return $md;
 	}
 	
+	/**
+	 * @return CommentableBehavior
+	 */
+	public function getCommentableBehavior()
+	{
+		$model = new self::$commentableType();
+		// dynamic relation with comment document
+		$behavior = $model->asa('commentable');
+		return $behavior;
+	}
+	
 	public function relations()
 	{
 		$rels = [];
@@ -51,9 +62,7 @@ class Commentable extends CActiveRecord
 		{
 			$type = self::$commentableType;
 			// dynamic relation with comment document
-			$model = new $type();
-			/* @var $behavior CommentableBehavior */
-			$behavior = $model->asa('commentable');
+			$behavior = $this->getCommentableBehavior();
 			$rels['subscriptions'] = array(self::HAS_MANY, 'NotifySubscription', 'item_id', 
 					'on' => "subscriptions.commentable_type='{$type}'", 'together' => false);
 		}
@@ -67,5 +76,20 @@ class Commentable extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	/**
+	 * url to comment data
+	 * @return array
+	 */
+	public function getUrlData()
+	{
+		$b = $this->getCommentableBehavior();
+		if ($urlFunc = $b->commentableUrl) {
+			$data = $urlFunc($this);
+		} else {
+			$data = '';
+		}
+		return $data;
 	}
 }

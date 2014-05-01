@@ -4,9 +4,6 @@ class NotifyController extends CController
 {
 	public function init()
 	{
-		Yii::import('news.models.*');
-		Yii::import('fashion.models.*');
-		Yii::import('party.models.*');
 	}
 
 	public function filters()

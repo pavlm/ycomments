@@ -229,12 +229,14 @@ class Comment extends CActiveRecord
 			// dynamic relation with commentable AR
 			$behavior = $this->getCommentableBehavior();
 			$rels['items'] = array(self::MANY_MANY, self::$commentableType, sprintf("%s(%s, %s)", $behavior->mapTable, $behavior->mapCommentColumn, $behavior->mapRelatedColumn), 'together' => false);
+			Commentable::$commentableType = self::$commentableType;
+			$rels['commentableItems'] = array(self::MANY_MANY, 'Commentable', sprintf("%s(%s, %s)", $behavior->mapTable, $behavior->mapCommentColumn, $behavior->mapRelatedColumn), 'together' => false);
 		}
 		return $rels;
 	}
 
 	/**
-	 * gets linked item (news)
+	 * gets linked item
 	 * @return CActiveRecord
 	 */
 	public function getItem() 
@@ -242,6 +244,18 @@ class Comment extends CActiveRecord
 		if (!$this->hasRelated('items'))
 			return false;
 		$items = $this->items;
+		return reset($items);
+	}
+
+	/**
+	 * gets linked item
+	 * @return Commentable
+	 */
+	public function getCommentableItem()
+	{
+		if (!$this->hasRelated('commentableItems'))
+			return false;
+		$items = $this->commentableItems;
 		return reset($items);
 	}
 	
