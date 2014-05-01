@@ -22,7 +22,7 @@ foreach ($groups as $iid => $cids):
 		/* @var $c Comment */
 		echo "<p>\n";
 		$c = $comments[$cid];
-		echo CHtml::tag('span', ['style' => 'color:gray'], sprintf("%s, %s:  ", 
+		echo CHtml::tag('span', array('style' => 'color:gray'), sprintf("%s, %s:  ", 
 			Yii::app()->dateFormatter->format( 'HH:mm dd MMM', $c->created_at), $c->getUserName()));
 		echo $c->message;
 		echo "</p>", "\n\n";

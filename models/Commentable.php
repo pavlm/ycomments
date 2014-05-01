@@ -26,7 +26,7 @@ class Commentable extends CActiveRecord
 		return $item->tableName();
 	}
 
-	public static $_mdByType = [];
+	public static $_mdByType = array();
 	
 	/**
 	 * respect dynamic relation depending on commentableType
@@ -38,7 +38,7 @@ class Commentable extends CActiveRecord
 			return self::$_mdByType[self::$commentableType];
 		if (!$md = parent::getMetaData())
 			return null;
-		$md->relations = [];
+		$md->relations = array();
 		foreach($this->relations() as $name=>$config)
 		{
 			$md->addRelation($name,$config);
@@ -60,7 +60,7 @@ class Commentable extends CActiveRecord
 	
 	public function relations()
 	{
-		$rels = [];
+		$rels = array();
 		if (self::$commentableType)
 		{
 			$type = self::$commentableType;

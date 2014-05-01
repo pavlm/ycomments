@@ -193,7 +193,7 @@ class Comment extends CActiveRecord
 		return $behavior;
 	}
 	
-	public static $_mdByType = [];
+	public static $_mdByType = array();
 	
 	/**
 	 * respect dynamic relation depending on commentableType
@@ -208,7 +208,7 @@ class Comment extends CActiveRecord
 			return self::$_mdByType[self::$commentableType];
 		if (!$md = parent::getMetaData())
 			return null;
-		$md->relations = [];
+		$md->relations = array();
 		foreach($this->relations() as $name=>$config)
 		{
 			$md->addRelation($name,$config);
@@ -419,7 +419,7 @@ class Comment extends CActiveRecord
 		$src = $relative ? Yii::app()->imager->getImageUrl($url, 'thumb210x130') : $url;
 		return '<div class="comment-img-block">'. 
 			CHtml::link( 
-				CHtml::image($src, '', !$relative ? ['class' => 'img210x130'] : []), 
+				CHtml::image($src, '', !$relative ? array('class' => 'img210x130') : array()), 
 				$url, array('class' => 'comment-img-link', 'target' => '_blank') 
 			) .'</div>';
 	}

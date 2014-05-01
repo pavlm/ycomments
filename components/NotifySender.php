@@ -163,13 +163,13 @@ class NotifySender extends CComponent
 		$to = $u->getUEmail();
 		$body = Yii::app()->controller->widget('ycomments.widgets.CommentsWidget', array(
 			'commentableType' => $this->commentableType, 'view' => 'notify',
-			'options' => ['user' => $u, 'items' => $items, 'comments' => $cs, 'groups' => $groups],
+			'options' => array('user' => $u, 'items' => $items, 'comments' => $cs, 'groups' => $groups),
 		), true);
 		
 		$this->log($body);
 		
 		Yii::import('common.extensions.mailer.YiiMailer');
-		$mail = new YiiMailer('', ['savePath' => 'application.runtime']);
+		$mail = new YiiMailer('', array('savePath' => 'application.runtime'));
 		$mail->SetFrom($from);
 		$mail->setTo($to);
 		$mail->setSubject($subject);

@@ -29,7 +29,7 @@ class CommentUser extends CActiveRecord
 	public function relations()
 	{
 		$rels = array(
-			'notifyUser' => [self::HAS_MANY, 'NotifyUser', 'user_id'],
+			'notifyUser' => array(self::HAS_MANY, 'NotifyUser', 'user_id'),
 		);
 		return array_merge($rels, $this->wrappedUser->relations());
 	}

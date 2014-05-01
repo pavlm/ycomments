@@ -37,9 +37,9 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 		<div class="comment-textedit__menu_knob">
 			<span class="ui-icon ui-icon-gear"></span>
 			<div class="comment-menu" style="">
-				<div class="comment-menu-item"> <?=CHtml::openTag('a', ['href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addLink'))])?> <span class="ui-icon ui-icon-link"></span>вставить ссылку...</a> </div>
-				<div class="comment-menu-item"> <?=CHtml::openTag('a', ['href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addImage'))])?> <span class="ui-icon ui-icon-image"></span>вставить изображение...</a> </div>
-				<div class="comment-menu-item"> <?=CHtml::openTag('a', ['href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addVideo'))])?><span class="ui-icon ui-icon-video"></span>вставить видео...</a> </div>
+				<div class="comment-menu-item"> <?=CHtml::openTag('a', array('href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addLink'))))?> <span class="ui-icon ui-icon-link"></span>вставить ссылку...</a> </div>
+				<div class="comment-menu-item"> <?=CHtml::openTag('a', array('href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addImage'))))?> <span class="ui-icon ui-icon-image"></span>вставить изображение...</a> </div>
+				<div class="comment-menu-item"> <?=CHtml::openTag('a', array('href' => '#', 'class' => 'comment-cmd', 'data-comment' => json_encode(array('cmd' => 'addVideo'))))?><span class="ui-icon ui-icon-video"></span>вставить видео...</a> </div>
 			</div>
 		</div>
 		<? endif; ?>

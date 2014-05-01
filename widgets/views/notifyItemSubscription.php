@@ -6,19 +6,19 @@ $behavior = $this->getCommentableBehavior();
 <div id="<?=$wid?>" class="notify-item-subscription" data-action="/comment/notify/itemSubscribe">
 <?
 /* @var $form TbActiveFormExt */
-$form = $this->beginWidget('TbActiveFormExt', [
+$form = $this->beginWidget('TbActiveFormExt', array(
 	'action'=>array('/comment/notify/itemSubscribe'),
-]);
+));
 
 if (Yii::app()->user->hasFlash('user-notify'))
-	echo CHtml::tag('div', ['class' => '-alert -alert-info'], Yii::app()->user->getFlash('user-notify'));
+	echo CHtml::tag('div', array('class' => '-alert -alert-info'), Yii::app()->user->getFlash('user-notify'));
 ?>
 	<? echo $form->hiddenField($this->notifySubs, 'commentable_type'); ?>
 	<? echo $form->hiddenField($this->notifySubs, 'item_id'); ?>
-	<? //echo $form->checkBoxRow($this->notifySubs, 'active', ['onclick' => 'submitSubscription(event, this);']); ?>
+	<? //echo $form->checkBoxRow($this->notifySubs, 'active', array('onclick' => 'submitSubscription(event, this);')); ?>
 	<label class="checkbox inline">
 	<?
-		echo $form->checkBox($this->notifySubs, 'active', ['onclick' => 'submitSubscription(event, this);', 'data-wid' => $wid]).PHP_EOL;
+		echo $form->checkBox($this->notifySubs, 'active', array('onclick' => 'submitSubscription(event, this);', 'data-wid' => $wid)).PHP_EOL;
 		echo ($label = @$behavior->labels['notify-item-subscribe-label']) ? $label : $this->notifySubs->getAttributeLabel('active');
 	?>
 	</label>

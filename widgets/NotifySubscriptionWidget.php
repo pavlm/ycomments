@@ -25,9 +25,9 @@ class NotifySubscriptionWidget extends CWidget
 		
 		$cr = new CDbCriteria();
 		$cr->condition = "t.user_id = ? AND t.commentable_type = ?";
-		$cr->params = [$uid, $this->commentableType];
+		$cr->params = array($uid, $this->commentableType);
 		$cr->with = 'item';
-		$this->subProvider = new CActiveDataProvider('NotifySubscription', ['criteria' => $cr, 'pagination' => ['pageSize' => 5]]);
+		$this->subProvider = new CActiveDataProvider('NotifySubscription', array('criteria' => $cr, 'pagination' => array('pageSize' => 5)));
 		 
 		$this->render('notifySubscription');
 	}

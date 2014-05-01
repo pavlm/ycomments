@@ -6,17 +6,17 @@ $wid = $this->id.'-'.time();
 ?>
 
 <?
-echo CHtml::openTag('div', ['id' => $wid]);
+echo CHtml::openTag('div', array('id' => $wid));
 /* @var $form TbActiveFormExt */
-$form = $this->beginWidget('TbActiveFormExt', [
+$form = $this->beginWidget('TbActiveFormExt', array(
 	'id' => 'user-subs',
 	'action'=>array('/comment/notify/userSettings'),
-]); 
+)); 
 	echo $form->hiddenField($this->notifyUser, 'commentable_type');
 	
 	//echo $form->errorSummary($this->notifyUser);
 	if (Yii::app()->user->hasFlash('user-notify'))
-		echo CHtml::tag('div', ['class' => 'alert alert-info'], Yii::app()->user->getFlash('user-notify'));
+		echo CHtml::tag('div', array('class' => 'alert alert-info'), Yii::app()->user->getFlash('user-notify'));
 	
 ?>
 <div>
@@ -32,15 +32,15 @@ $form = $this->beginWidget('TbActiveFormExt', [
     ]);
 
     if (Yii::app()->user->checkAccess('admin'))
-		echo $form->checkBoxRow($this->notifyUser, 'notify_all', [
+		echo $form->checkBoxRow($this->notifyUser, 'notify_all', array(
             'id' => 'na-'.$wid,
             'onclick' => $ajax
-        ]);
+        ));
 	?>
-	<? echo $form->checkBoxRow($this->notifyUser, 'notify_reply', [
+	<? echo $form->checkBoxRow($this->notifyUser, 'notify_reply', array(
         'id' => 'nr-'.$wid,
         'onclick' => $ajax
-    ]); ?>
+    )); ?>
 	<br><br>
 	
 	<?

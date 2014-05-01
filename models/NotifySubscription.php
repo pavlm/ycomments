@@ -93,7 +93,7 @@ class NotifySubscription extends CActiveRecord {
 	{
 		if (!$md = parent::getMetaData())
 			return null;
-		$md->relations = [];
+		$md->relations = array();
 		foreach($this->relations() as $name=>$config)
 		{
 			$md->addRelation($name,$config);
@@ -105,11 +105,11 @@ class NotifySubscription extends CActiveRecord {
 	
 	public function relations() {
 		if (self::$commentableType) {
-			return [
-				'item' => [self::BELONGS_TO, self::$commentableType, 'item_id'],
-			];
+			return array(
+				'item' => array(self::BELONGS_TO, self::$commentableType, 'item_id'),
+			);
 		} else {
-			return [];
+			return array();
 		}
 	}
 
