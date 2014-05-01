@@ -55,6 +55,7 @@ float:none;
 .comment__info div.star-rating a {
 display: inline-block;
 margin-right: 2px;
+height:16px;
 }
 
 .comment__info__link {
