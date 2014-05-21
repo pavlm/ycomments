@@ -19,8 +19,8 @@ class NotifyUser extends CActiveRecord {
 	public function __construct($scenario='insert')
 	{
 		parent::__construct($scenario);
-		$this->notify_all = true;
-		$this->notify_reply = true;
+		$this->notify_all = 1;
+		$this->notify_reply = 1;
 	}
 	
 	/**

@@ -8,11 +8,15 @@ class CommentUser extends CActiveRecord
 	 * @var CActiveRecord
 	 */
 	public $wrappedUser;
+	/**
+	 * @var YCommentsModule
+	 */
+	public $cm;
 	
 	public function __construct($scenario='insert')
 	{
 		parent::__construct($scenario);
-		$cm = Yii::app()->getModule('ycomments');
+		$this->cm = $cm = Yii::app()->getModule('ycomments');
 		$this->wrappedUser = new $cm->userModelClass;
 	}
 
@@ -76,8 +80,7 @@ class CommentUser extends CActiveRecord
 
 	public function isSubscribedAdmin($commentableType)
 	{
-		// todo: make universal
-		if (!$this->superuser)
+		if (!call_user_func($this->cm->adminUserClosure, $this))
 			return false;
 		$nu = $this->getNotifyUserOrDefault($commentableType);
 		return $nu->notify_all;

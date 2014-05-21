@@ -1,7 +1,5 @@
 <?php
 /* @var $this CommentsWidget */
-$comment = $this->comment;
-$commentableType = $this->commentableType;
 /* @var $user CommentUser */
 /* @var $items CActiveRecord[] */
 /* @var $comments Comment[] */
@@ -15,7 +13,6 @@ foreach ($groups as $iid => $cids):
 	$item = $items[$iid];
 	echo "<p>\n";
 	echo CHtml::link($item->name, $item->getUrlData()), "\n";
-	echo "<br>", str_repeat('=', 10);
 	echo "</p>\n";
 
 	foreach ($cids as $cid):

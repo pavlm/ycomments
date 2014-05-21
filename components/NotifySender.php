@@ -7,7 +7,7 @@
 class NotifySender extends CComponent
 {
 	/**
-	 * @var CommentModule
+	 * @var YCommentsModule
 	 */
 	public $cm;
 	
@@ -43,7 +43,7 @@ class NotifySender extends CComponent
 		$this->log('checking for type '.$commentableType);
 		$commentType = $behavior->commentType;
 		/* @var $comment Comment */
-		$comment = new $commentType;
+		$comment = Yii::createComponent($commentType);
 
 		
 		/*
@@ -87,7 +87,8 @@ class NotifySender extends CComponent
 			return ($c->created_at > $res->created_at) ? $c : $res;
 		}, $cf);
 		$ng->last_check_at = $commentOldest->created_at;
-		$ng->save();
+		if (!defined('YCOMMENT_DEBUG'))
+			$ng->save();
 	}
 	
 	/**
@@ -168,24 +169,16 @@ class NotifySender extends CComponent
 		
 		$this->log($body);
 		
-		Yii::import('common.extensions.mailer.YiiMailer');
-		$mail = new YiiMailer('', array('savePath' => 'application.runtime'));
-		$mail->SetFrom($from);
-		$mail->setTo($to);
-		$mail->setSubject($subject);
-		$mail->setBody($body);
+		$emailParams = compact('from', 'to', 'subject', 'body');
 		
-		$testMode = Yii::app()->params['notifyTestMode'];
-		$testEmails = Yii::app()->params['notifyTestEmails'];
+		if (is_callable($this->cm->emailSenderCallable))
+			$sent = $this->cm->emailSenderCallable($emailParams);
+		else 
+			$sent = $this->sendEmail($emailParams);
+		
+// 		$testMode = Yii::app()->params['notifyTestMode'];
+// 		$testEmails = Yii::app()->params['notifyTestEmails'];
 
-		if ($testMode) {
-			$testEmails = explode(',', $testEmails);
-			$sent = in_array($to, $testEmails) ? $mail->send() : false;
-			$mail->save();
-		} else {
-			$sent = $mail->send();
-		}
-		
 		$msg = $sent ? 'mail sent' : 'mail not sent';
 		$this->log($msg." : ".json_encode(array('to' => $to, 'subject' => $subject)));
 		
@@ -213,7 +206,9 @@ class NotifySender extends CComponent
 	public function getSubscribedAdmins($commentableType)
 	{
 		// todo: universal method
-		$us = CommentUser::model()->findAllByAttributes(array('superuser' => 1), array('with' => 'notifyUser', 'index' => 'id'));
+		$cr = new CDbCriteria($this->cm->criteriaAdminUsers);
+		$cr->mergeWith(array('with' => 'notifyUser', 'index' => 'id'));
+		$us = CommentUser::model()->findAll($cr);
 		$us = array_filter($us, function($u)use($commentableType){
 			/* @var $u CommentUser */
 			$nu = $u->getNotifyUserOrDefault($commentableType);
@@ -266,4 +261,18 @@ class NotifySender extends CComponent
 		Yii::log($msg, $level=CLogger::LEVEL_INFO, 'notify');
 	}
 	
+	public function sendEmail($emailParams)
+	{
+		extract($emailParams);
+		$headers[] = "MIME-Version: 1.0";
+		$headers[] = "From: {$from}";
+		$headers[] = "Content-Type: text/html; charset=UTF-8";
+		$subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
+		$body = '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>'.$body.'</body></html>';
+		if (defined('YCOMMENT_DEBUG') && YCOMMENT_DEBUG) {
+			$this->log(var_export(array('to' => $to, 'subject' => $subject, 'body' => $body), true));
+			return true;
+		}
+		return mail($to, $subject, $body, implode("\r\n",$headers)); 
+	}
 }

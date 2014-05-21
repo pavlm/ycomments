@@ -39,14 +39,23 @@ class YCommentsModule extends CWebModule
 	public $commentType = 'ycomments.models.Comment';
 	
 	public $notifyMailFrom;
+	/**
+	 * @var Callable override for standard email sender
+	 */
+	public $emailSenderCallable;
+	/**
+	 * @var array
+	 */
+	public $criteriaAdminUsers;
+	/**
+	 * @var Closure must return true if user in param is admin 
+	 */
+	public $adminUserClosure;
 	
 	public $adminLayout;
 	
     public function init()
     {
-        // this method is called when the module is being created
-        // you may place code here to customize the module or the application
-
         // import the module-level models and components
         $this->setImport(array(
 	        'ycomments.models.*',
