@@ -121,7 +121,7 @@ class NotifySender extends CComponent
 					continue;
 				}
 				
-				if (!$item = $c->getItem())
+				if (!$item = $c->getCommentableItem())
 					continue; // unrelated
 				$itemSub = $itemsSubs[$item->id]; // todo: check empty
 				if ($u->isSubscribedOnItem($itemSub)) {
