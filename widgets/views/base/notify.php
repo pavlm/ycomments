@@ -12,7 +12,7 @@ foreach ($groups as $iid => $cids):
 
 	$item = $items[$iid];
 	echo "<p>\n";
-	echo CHtml::link($item->name, $item->getUrlData()), "\n";
+	echo CHtml::link($item->name, $item->getAbsoluteUrl()), "\n";
 	echo "</p>\n";
 
 	foreach ($cids as $cid):

@@ -481,7 +481,8 @@ class Comment extends CActiveRecord
 	{
 		$b = $this->getCommentableBehavior();
 		if ($urlFunc = $b->commentableUrl) {
-			$data = $urlFunc($this);
+			$commentable = @$this->items[0];
+			$data = $urlFunc($commentable);
 		} else {
 			$route = Yii::app()->controller->id.'/'.Yii::app()->controller->action->id;
 			$data = array_merge(array($route), $_GET);

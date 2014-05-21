@@ -89,10 +89,18 @@ class Commentable extends CActiveRecord
 	{
 		$b = $this->getCommentableBehavior();
 		if ($urlFunc = $b->commentableUrl) {
-			$data = array('/asdf'); // todo: change commentableUrl
+			$data = $urlFunc($this);
 		} else {
 			$data = '';
 		}
 		return $data;
+	}
+	
+	public function getAbsoluteUrl()
+	{
+		$data = $this->getUrlData();
+		if (!is_array($data)) return '';
+		$route = array_shift($data);
+		return Yii::app()->createAbsoluteUrl($route, $data);
 	}
 }

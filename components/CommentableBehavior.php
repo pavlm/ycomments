@@ -55,9 +55,8 @@ class CommentableBehavior extends CActiveRecordBehavior
 	
 	/**
 	 * link to commentable item
-	 * function($comment) {
-	 * 		$item = @$comment->items[0];
-	 * 		return array('news/view', 'id' => $item->id);
+	 * function($commentable) {
+	 * 		return array('news/view', 'id' => $commentable->id);
 	 * } 
 	 * @var Callable
 	 */
@@ -142,6 +141,7 @@ class CommentableBehavior extends CActiveRecordBehavior
 		foreach($comments as $comment) {
 			/** @var Comment $comment */
 			$comment->setKey($this->owner->primaryKey);
+			$comment->items = array($this->owner); // prevent lazy load
 		}
 		$this->commentsLoaded = count($comments);
 
