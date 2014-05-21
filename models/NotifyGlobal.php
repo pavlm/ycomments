@@ -61,7 +61,7 @@ class NotifyGlobal extends CActiveRecord {
 	 */
 	public static function findOrCreate($commentableType)
 	{
-		if ($ng = self::model()->findByAttributes(['commentable_type' => $commentableType]))
+		if ($ng = self::model()->findByAttributes(array('commentable_type' => $commentableType)))
 			return $ng;
 		$ng = new self();
 		$ng->commentable_type = $commentableType;

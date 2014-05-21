@@ -38,7 +38,7 @@ class NotifySubscription extends CActiveRecord {
 	 */
 	public static function findOrCreate($commentableType, $itemId, $userId)
 	{
-		if ($ns = NotifySubscription::model()->findByAttributes(['item_id' => $itemId, 'commentable_type' => $commentableType, 'user_id' => $userId]))
+		if ($ns = NotifySubscription::model()->findByAttributes(array('item_id' => $itemId, 'commentable_type' => $commentableType, 'user_id' => $userId)))
 			return $ns;
 		$ns = new self();
 		$ns->commentable_type = $commentableType;

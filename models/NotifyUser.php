@@ -28,7 +28,7 @@ class NotifyUser extends CActiveRecord {
 	 */
 	public static function loadDefault($commentableType=null)
 	{
-		if ($nu = NotifyUser::model()->findByAttributes(['user_id' => Yii::app()->user->id, 'commentable_type' => $commentableType]))
+		if ($nu = NotifyUser::model()->findByAttributes(array('user_id' => Yii::app()->user->id, 'commentable_type' => $commentableType)))
 			return $nu;
 		$nu = new self();
 		$nu->user_id = Yii::app()->user->id;
