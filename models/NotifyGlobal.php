@@ -49,9 +49,9 @@ class NotifyGlobal extends CActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'id' => Yii::t('app', 'ID'),
-			'commentable_type' => Yii::t('app', 'Commentable Type'),
-			'last_check_at' => Yii::t('app', 'Last Check At'),
+			'id' => 'ID',
+			'commentable_type' => YCommentsModule::t('Commentable Type'),
+			'last_check_at' => YCommentsModule::t('Last Check At'),
 		);
 	}
 

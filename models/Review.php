@@ -46,8 +46,8 @@ class Review extends Comment
 		return array_merge(
 				parent::attributeLabels(),
 				array(
-					'rating' => 'Оценка',
-					'message' => 'Отзыв',
+					'rating' => YCommentsModule::t('Rating'),
+					'message' => YCommentsModule::t('Review'),
 				)
 		);
 	}

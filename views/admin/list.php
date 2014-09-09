@@ -24,7 +24,7 @@ $ts->init();
 				'id', 
 				'message', 
 				array('name' => 'created_at', 'htmlOptions' => array('style' => 'white-space:nowrap;')),
-				array('header' => 'Автор', 'name' => 'user_id', 'value' => '$data->user ? $data->user->uname ." [". $data->user_id ."]" : "[". $data->user_id ."]"'), 
+				array('header' => YCommentsModule::t('Author'), 'name' => 'user_id', 'value' => '$data->user ? $data->user->uname ." [". $data->user_id ."]" : "[". $data->user_id ."]"'), 
 		);
 		if ($behavior->getCommentInstance() instanceof Review) {
 			$columns[] = array('name' => 'rating');

@@ -115,8 +115,8 @@ class CommentUser extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'UName' => 'Имя',
-			'UEmail' => 'Email',
+			'UName' => YCommentsModule::t('Name'),
+			'UEmail' => YCommentsModule::t('Email'),
 		);
 	}
 }

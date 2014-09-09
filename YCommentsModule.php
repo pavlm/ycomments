@@ -121,4 +121,9 @@ class YCommentsModule extends CWebModule
 		$event->commentedModel = $model;
 		$this->raiseEvent('onDeleteComment', $event);
 	}
+
+	public static function t($str='',$params=array()) {
+		return Yii::t("YCommentsModule.messages", $str, $params);
+	}
+	
 }

@@ -82,10 +82,10 @@ class NotifyUser extends CActiveRecord {
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
-			'commentable_type' => 'Commentable Type',
-			'user_id' => 'User',
-			'notify_all' => 'Подписка на все сообщения',
-			'notify_reply' => 'Подписка на ответы к моим сообщениям',
+			'commentable_type' => YCommentsModule::t('Commentable Type'),
+			'user_id' => YCommentsModule::t('User'),
+			'notify_all' => YCommentsModule::t('Подписка на все сообщения'),
+			'notify_reply' => YCommentsModule::t('Подписка на ответы к моим сообщениям'),
 		);
 	}
 

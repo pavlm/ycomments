@@ -121,10 +121,10 @@ class NotifySubscription extends CActiveRecord {
 	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'commentable_type' => 'Commentable Type',
-			'item_id' => 'Item',
-			'active' => $this->active ? 'Вы подписаны на комментарии' : 'Подписаться на комментарии',
+			'user_id' => YCommentsModule::t('User'),
+			'commentable_type' => YCommentsModule::t('Commentable Type'),
+			'item_id' => YCommentsModule::t('Item'),
+			'active' => $this->active ? YCommentsModule::t('You are subscribed') : YCommentsModule::t('Subscribe'),
 		);
 	}
 

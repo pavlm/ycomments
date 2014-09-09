@@ -41,10 +41,10 @@ $isGuest = Yii::app()->user->isGuest;
 			<? 
 			///////// edit & delete links
 	
-			echo CHtml::link('редактировать...', '#',
+			echo CHtml::link(YCommentsModule::t('edit').'...', '#',
 					array('class' => 'comment__menu__item comment-cmd', 'data-comment' => json_encode(array('cmd' => 'update', 'cid' => $comment->id), JSON_NUMERIC_CHECK) ) );
 
-			echo CHtml::link('удалить...', '#',
+			echo CHtml::link(YCommentsModule::t('delete').'...', '#',
 					array('class' => 'comment__menu__item comment-cmd', 'data-comment' => json_encode(array('cmd' => 'delete', 'cid' => $comment->id), JSON_NUMERIC_CHECK) ) );
 			?>
 			</span>
@@ -67,7 +67,7 @@ $isGuest = Yii::app()->user->isGuest;
 			<? if ($behavior->allowVotes): ?>
 			
 				<? if ($comment->checkAccess('commentator')): ?>
-				<?=CHtml::link($comment->userLike ? 'Не нравится' : 'Нравится', "#",
+				<?=CHtml::link($comment->userLike ? YCommentsModule::t('dont like') : YCommentsModule::t('like'), "#",
 						array('class' => "comment-like comment-cmd ", 'data-comment' => json_encode(array('cmd' => 'like', 'cid' => $comment->id), JSON_NUMERIC_CHECK), 'rel' => 'nofollow' ) ); ?>
 				<? endif; ?>
 				
@@ -77,7 +77,7 @@ $isGuest = Yii::app()->user->isGuest;
 			
 				<? $levelAllowed = ($behavior->maxReplyLevel && ($level > $behavior->maxReplyLevel)) ? false : true; // ответы могут быть разрешены не для всех уровней ?>
 				<? if (!$this->readOnly && $levelAllowed): ?>
-				<? echo CHtml::link('ответить', "#",
+				<? echo CHtml::link(YCommentsModule::t('reply'), "#",
 							array('class' => "btn btn-mini comment__button-reply comment-cmd ", 'data-comment' => json_encode(array('cmd' => 'reply', 'cid' => $comment->id), JSON_NUMERIC_CHECK) ) ); ?>
 				<? endif; ?>
 			

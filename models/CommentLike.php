@@ -38,8 +38,8 @@ class CommentLike extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'comment_id' => 'Comment',
-				'user_id' => 'User',
+				'comment_id' => YCommentsModule::t('Comment'),
+				'user_id' => YCommentsModule::t('User'),
 		);
 	}
 

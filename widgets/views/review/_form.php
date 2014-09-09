@@ -32,7 +32,7 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 	
 	<? if (!$comment->parent_id): // rating only for top reviews ?>
 	<div class="comment__form__row">
-		<label class="comment__form__label comment__form__label-rating">оценка</label>
+		<label class="comment__form__label comment__form__label-rating"><?=YCommentsModule::t('rating')?></label>
 		<div class="comment__form__rating">
     	<? $this->widget('CStarRating', array(
     			'model' => $comment, 'attribute'=>'rating', 'maxRating' => 5, 'allowEmpty' => false)); ?>
@@ -61,23 +61,23 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 	    	<? 
 	    	echo $form->hiddenField($comment, 'key');
 	    	echo $form->hiddenField($comment, 'parent_id');
-	    	echo CHtml::link('Добавить', '#', array('class' => 'comment__button comment__button-post comment-cmd', 'title' => 'Ctrl+Enter',
+	    	echo CHtml::link(YCommentsModule::t('Add'), '#', array('class' => 'comment__button comment__button-post comment-cmd', 'title' => 'Ctrl+Enter',
 				'data-comment' => json_encode(array('cmd' => 'post', 'cid' => 0, 'parent_id' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			if ($comment->parent_id)
-				echo CHtml::link('Закрыть', '#', array('class' => 'comment__button comment__button-close comment-cmd', 
+				echo CHtml::link(YCommentsModule::t('Close'), '#', array('class' => 'comment__button comment__button-close comment-cmd', 
 					'data-comment' => json_encode(array('cmd' => 'close', 'cid' => 0, 'parent' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			?>
 
 		<? else: ?>
 			<? 
-			echo CHtml::link('Сохранить', '#', array('class' => 'comment__button comment__button-post comment-cmd',
+			echo CHtml::link(YCommentsModule::t('Save'), '#', array('class' => 'comment__button comment__button-post comment-cmd',
 					'data-comment' => json_encode(array('cmd' => 'post', 'cid' => $comment->id), JSON_NUMERIC_CHECK)) );
-			echo CHtml::link('Закрыть', '#', array('class' => 'comment__button comment__button-close comment-cmd',
+			echo CHtml::link(YCommentsModule::t('Close'), '#', array('class' => 'comment__button comment__button-close comment-cmd',
 					'data-comment' => json_encode(array('cmd' => 'close', 'cid' => $comment->id, 'parent' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			?>
 
 		<? endif; ?>
-		<span class="comment__form__stat" title="Осталось символов"></span>
+		<span class="comment__form__stat" title="<?=YCommentsModule::t('Symbols left')?>"></span>
 
 		<?
 		if ($this->getCommentableBehavior()->notifyEnabled &&

@@ -150,7 +150,7 @@ class Comment extends CActiveRecord
 			$urls = $ms['url'];
 			foreach ($urls as $url) {
 				if (!$uv->validateValue($url))
-					$this->addError('message', 'неверный адрес '.CHtml::encode($url));
+					$this->addError('message', YCommentsModule::t('wrong address').' '.CHtml::encode($url));
 			}
 		}
 		if (preg_match_all(self::$tagImgRegex, $this->message, $ms))
@@ -166,7 +166,7 @@ class Comment extends CActiveRecord
 						if (file_exists($src))
 							continue; // no error
 					}
-					$this->addError('message', 'неверный адрес '.CHtml::encode($url));
+					$this->addError('message', YCommentsModule::t('wrong address').' '.CHtml::encode($url));
 				}
 			}
 		}
@@ -343,12 +343,12 @@ class Comment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'message' => 'Комментарий',
-			'user_id' => 'User ID',
-			'userName' => 'Имя',
-			'userEmail' => 'E-Mail',
-			'created_at' => 'Создан',
-			'updated_at' => 'Изменен',
+			'message' => YCommentsModule::t('Comment'),
+			'user_id' => YCommentsModule::t('User ID'),
+			'userName' => YCommentsModule::t('Name'),
+			'userEmail' => YCommentsModule::t('E-Mail'),
+			'created_at' => YCommentsModule::t('Created'),
+			'updated_at' => YCommentsModule::t('Updated'),
 		);
 	}
 

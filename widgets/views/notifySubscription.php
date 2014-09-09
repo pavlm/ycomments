@@ -55,7 +55,7 @@ $form = $this->beginWidget('TbActiveFormExt', array(
 				'id' => 'subs-items-'.$this->commentableType,
 				'dataProvider' => $this->subProvider, 
 				'itemView' => '_notifySubItem',
-				'emptyText' => 'нет подписок',
+				'emptyText' => YCommentsModule::t('no subscriptions'),
 				'template' => "<table> {items}\n </table> {pager}\n{summary}",
 			));
 		?>

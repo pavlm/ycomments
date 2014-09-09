@@ -64,18 +64,18 @@ $classes = sprintf("form comment %s %s", ($comment->id ? 'comment-exists' : ''),
 		<div class="btn-group">
 	    <? if ($comment->isNewRecord): ?>
 	    	<? 
-	    	echo CHtml::link('Добавить отзыв', '#', array('class' => 'btn btn-small comment__button-post comment-cmd', 'title' => 'Ctrl+Enter',
+	    	echo CHtml::link(YCommentsModule::t('Add review'), '#', array('class' => 'btn btn-small comment__button-post comment-cmd', 'title' => 'Ctrl+Enter',
 				'data-comment' => json_encode(array('cmd' => 'post', 'cid' => 0, 'parent_id' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			if ($comment->parent_id)
-				echo CHtml::link('Закрыть', '#', array('class' => 'btn btn-small comment__button-close comment-cmd', 
+				echo CHtml::link(YCommentsModule::t('Close'), '#', array('class' => 'btn btn-small comment__button-close comment-cmd', 
 					'data-comment' => json_encode(array('cmd' => 'close', 'cid' => 0, 'parent' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			?>
 
 		<? else: ?>
 			<? 
-			echo CHtml::link('Сохранить отзыв', '#', array('class' => 'btn btn-small comment__button-post comment-cmd',
+			echo CHtml::link(YCommentsModule::t('Save review'), '#', array('class' => 'btn btn-small comment__button-post comment-cmd',
 					'data-comment' => json_encode(array('cmd' => 'post', 'cid' => $comment->id), JSON_NUMERIC_CHECK)) );
-			echo CHtml::link('Закрыть', '#', array('class' => 'btn btn-small comment__button-close comment-cmd',
+			echo CHtml::link(YCommentsModule::t('Close'), '#', array('class' => 'btn btn-small comment__button-close comment-cmd',
 					'data-comment' => json_encode(array('cmd' => 'close', 'cid' => $comment->id, 'parent' => $comment->parent_id), JSON_NUMERIC_CHECK)) );
 			?>
 
