@@ -114,4 +114,19 @@ class CommentsWidget extends CWidget
 		return Yii::app()->getModule('ycomments')->getBasePath();
 	}
 	
+	public function registerAssets() {
+		$pathAsset = $this->getModuleBasePath().'/assets/'; 
+		$urlAsset = Yii::app()->assetManager->publish($pathAsset, false, 0, YII_DEBUG);
+		Yii::app()->clientScript->registerScriptFile($urlAsset.'/ycomments.js',
+			Yii::app()->request->isAjaxRequest ? CClientScript::POS_BEGIN : CClientScript::POS_HEAD );
+		Yii::app()->clientScript->registerCssFile($urlAsset.'/ycomments.css');
+		$lang = substr(Yii::app()->language, 0, 2);
+		$langFile = "/ycomments.$lang.js";
+		if (file_exists($pathAsset.$langFile)) {
+			Yii::app()->clientScript->registerScriptFile($urlAsset.$langFile,
+				Yii::app()->request->isAjaxRequest ? CClientScript::POS_BEGIN : CClientScript::POS_HEAD );
+		}
+		return $urlAsset;
+	}
+	
 }

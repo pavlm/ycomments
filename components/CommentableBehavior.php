@@ -21,7 +21,7 @@ class CommentableBehavior extends CActiveRecordBehavior
 	 */
 	public $mapRelatedColumn = 'news_id';
 	/**
-	 * @var bool - base views will be loaded
+	 * @var bool - base views will be loaded (in base directory), if not - path to views will be based on comment model name (e.g. Review) 
 	 */
 	public $baseViews = true;
 	

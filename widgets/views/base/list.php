@@ -2,10 +2,7 @@
 /* @var $this CommentsWidget */
 /* @var $model CActiveRecord - commentable model */
 $model = $this->model;
-$urlAsset = Yii::app()->assetManager->publish($this->getModuleBasePath().'/assets/', false, 0, YII_DEBUG);
-Yii::app()->clientScript->registerScriptFile($urlAsset.'/ycomments.js', 
-	Yii::app()->request->isAjaxRequest ? CClientScript::POS_BEGIN : CClientScript::POS_HEAD );
-Yii::app()->clientScript->registerCssFile($urlAsset.'/ycomments.css');
+$this->registerAssets();
 $widgetId = $this->id;
 /** @var CArrayDataProvider $comments */
 $comments = $model->getComments();
@@ -14,7 +11,7 @@ $comments = $model->getComments();
 
 <div class="comment-list-wrap">
 	<a name="commentblock"></a>
-	<h3 class="comment-list-head">Комментарии</h3>
+	<h3 class="comment-list-head"><?=YCommentsModule::t('Comments')?></h3>
 
 <?
 echo CHtml::openTag('div', 

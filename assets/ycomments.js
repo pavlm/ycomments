@@ -111,7 +111,7 @@
         },
         
         'delete' : function(a, data) {
-        	if (!confirm('Удалить комментарий?')) return;
+        	if (!confirm(this.t('Delete comment')+'?')) return;
         	var query = this.getBaseQueryData(data);
         	$.ajax({ 
         		type:'post',
@@ -122,7 +122,7 @@
     				this.$el.trigger('comment.deleted', data.cid);
         		}.bind(this),
         		error:function(xhr, status) {
-        			alert('Ошибка удаления');
+        			alert('error');
         		}
         	});
         },
@@ -172,25 +172,7 @@
         			var $likes = $(button).closest('.comment-commands').find('.comment-likes');
         			$likes.text(data.likes).attr('data-likes', data.likes);
         			var $link = $(button).closest('.comment-commands').find('.comment-like');
-        			$link.text(data.dir==1 ? 'Не нравится' : 'Нравится');
-        		}.bind(this)
-        	});
-        	
-        },
-
-        voteup : function(button, data) { this.vote(button, data); },
-        votedn : function(button, data) { this.vote(button, data); },
-        vote : function(button, data) {
-        	
-        	$.ajax({ 
-        		url:'/news/ratingcomments', 
-        		data:{id_com:data.cid, rating:(data.cmd == 'voteup' ? 0 : 1)},
-        		dataType:'json',
-        		success:function(data) {
-        			if (!data.res) return;
-        			var $ud = $(button).closest('.up-down');
-        			$ud.find('.comment_up').text(data.votes_up>0 ? '+'+data.votes_up : data.votes_up);
-        			$ud.find('.comment_down').text(data.votes_dn>0 ? '-'+data.votes_dn : data.votes_dn);
+        			$link.text(data.dir==1 ? this.t('Doesn\'t like') : this.t('Like'));
         		}.bind(this)
         	});
         	
@@ -301,7 +283,7 @@
         dialog : function(anchor, title, content, callbackData) {
         	$content = $(content).appendTo('body').attr('title', title);
         	$content.dialog({
-        		modal:true, dialogClass:'svs comment-dialog', 
+        		modal:true, dialogClass:'comment-dialog', 
         		buttons:{ 
         			'OK': function() {
         				var $dlg = $(this);
@@ -325,16 +307,22 @@
         
         clearEmptyText : function() {
         	this.$el.find('.items .empty').remove();
+        },
+        
+        messages : {},
+        
+        t : function(msg) {
+        	return this.messages[msg] ? this.messages[msg] : msg;
         }
 
     };
 
-    $.fn['ycomments'] = function ( options ) {
+    $.fn.ycomments = function ( options ) {
         return this.each(function () {
         	var cmnts = $.data(this, "ycomments"); 
             if (!cmnts) {
                 $.data(this, "ycomments",
-                new Ycomments( this, options ));
+                		new $.fn.ycomments.class( this, options ));
             } else {
             	if (typeof options == 'string') {
             		cmnts[options]();
@@ -342,5 +330,7 @@
             }
         });
     };
+    
+    $.fn.ycomments.class = Ycomments;
 
 })( jQuery, window, document );
