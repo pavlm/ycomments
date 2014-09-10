@@ -7,10 +7,10 @@ $wid = $this->id.'-'.time();
 
 <?
 echo CHtml::openTag('div', array('id' => $wid));
-/* @var $form TbActiveFormExt */
-$form = $this->beginWidget('TbActiveFormExt', array(
+/* @var $form CActiveForm */
+$form = $this->beginWidget('CActiveForm', array(
 	'id' => 'user-subs',
-	'action'=>array('/comment/notify/userSettings'),
+	'action'=>array('/ycomments/notify/userSettings'),
 )); 
 	echo $form->hiddenField($this->notifyUser, 'commentable_type');
 	
@@ -20,9 +20,6 @@ $form = $this->beginWidget('TbActiveFormExt', array(
 	
 ?>
 <div>
-	<?/*?>
-	<h3>Настройки подписки</h3>
-	<?*/?>
 	
 	<?
     $ajax = CHtml::ajax([
@@ -31,16 +28,34 @@ $form = $this->beginWidget('TbActiveFormExt', array(
         'update' => '#'.$wid
     ]);
 
-    if (Yii::app()->user->checkAccess('admin'))
-		echo $form->checkBoxRow($this->notifyUser, 'notify_all', array(
+    if (Yii::app()->user->checkAccess('admin')) {
+		echo CHtml::openTag('label', array('for' => 'na-'.$wid));
+    	echo $form->checkBox($this->notifyUser, 'notify_all', array(
             'id' => 'na-'.$wid,
             'onclick' => $ajax
         ));
+		echo $this->notifyUser->getAttributeLabel('notify_all');
+		echo CHtml::closeTag('label');
+// 		echo $form->checkBoxRow($this->notifyUser, 'notify_all', array(
+//             'id' => 'na-'.$wid,
+//             'onclick' => $ajax
+//         ));
+	}
 	?>
-	<? echo $form->checkBoxRow($this->notifyUser, 'notify_reply', array(
+	<? 
+	echo CHtml::openTag('label', array('for' => 'nr-'.$wid));
+	echo $form->checkBox($this->notifyUser, 'notify_reply', array(
         'id' => 'nr-'.$wid,
         'onclick' => $ajax
-    )); ?>
+    ));
+	echo $this->notifyUser->getAttributeLabel('notify_reply');
+	echo CHtml::closeTag('label');
+
+// 	echo $form->checkBoxRow($this->notifyUser, 'notify_reply', array(
+//         'id' => 'nr-'.$wid,
+//         'onclick' => $ajax
+//     )); 
+	?>
 	<br><br>
 	
 	<?
@@ -48,7 +63,7 @@ $form = $this->beginWidget('TbActiveFormExt', array(
 	$itemCount = $this->subProvider->getTotalItemCount();
 	?>
 	<? if ($itemCount): ?>
-		<h3>Подписки на материалы</h3>
+		<h3><?=YCommentsModule::t('Item subscriptions')?></h3>
 		<? 
 		$this->widget('zii.widgets.CListView', 
 			array(

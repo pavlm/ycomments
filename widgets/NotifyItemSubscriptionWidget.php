@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 
+ * Widget manages current user subscription for $commentableType item with id=$itemId
+ * @author pavl
+ *
+ */
 class NotifyItemSubscriptionWidget extends CWidget
 {
 	public $commentableType;

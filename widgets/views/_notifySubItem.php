@@ -1,11 +1,12 @@
 <?php
 /* @var $data NotifySubscription */
 $ns = $data;
+$item = $ns->item;
 ?>
 
 <tr>
 	<td>
-	<?=$ns->item ? CHtml::link($ns->item->name, $ns->item->getSpecUrl()) : ''?>
+	<?=$item ? CHtml::link($item->name, $item->getCommentableUrl()) : ''?>
 	</td>
 	<td>
 	</td>

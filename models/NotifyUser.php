@@ -63,7 +63,7 @@ class NotifyUser extends CActiveRecord {
 	public function commentableTypeValidator($attribute, $params)
 	{
 		/* @var $cm YCommentsModule */
-		$cm = Yii::app()->getModule('comment');
+		$cm = Yii::app()->getModule('ycomments');
 		$cts = array_keys($cm->commentableTypes);
 		if (!in_array(strtolower($this->$attribute), $cts))
 			$this->addError($attribute, 'Недопустимый тип');
@@ -84,8 +84,8 @@ class NotifyUser extends CActiveRecord {
 			'id' => 'ID',
 			'commentable_type' => YCommentsModule::t('Commentable Type'),
 			'user_id' => YCommentsModule::t('User'),
-			'notify_all' => YCommentsModule::t('Подписка на все сообщения'),
-			'notify_reply' => YCommentsModule::t('Подписка на ответы к моим сообщениям'),
+			'notify_all' => YCommentsModule::t('All messages subscription'),
+			'notify_reply' => YCommentsModule::t('Replies to my messages'),
 		);
 	}
 

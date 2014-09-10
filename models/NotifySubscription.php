@@ -74,7 +74,7 @@ class NotifySubscription extends CActiveRecord {
 	public function commentableTypeValidator($attribute, $params)
 	{
 		/* @var $cm YCommentsModule */
-		$cm = Yii::app()->getModule('comment');
+		$cm = Yii::app()->getModule('ycomments');
 		$cts = array_keys($cm->commentableTypes);
 		if (!in_array(strtolower($this->$attribute), $cts))
 			$this->addError($attribute, 'Недопустимый тип');

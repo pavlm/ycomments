@@ -48,12 +48,12 @@ class NotifyController extends CController
 			$nu->attributes = $_POST['NotifyUser'];
 		}
 		if ($nu->save()) {
-			Yii::app()->user->setFlash('user-notify', 'Настройки сохранены');
+			Yii::app()->user->setFlash('user-notify', YCommentsModule::t('Settings saved'));
 		} else {
 			Yii::app()->user->setFlash('user-notify', print_r($nu->getErrors(), true));
 		}
 			
-		$this->widget('common.extensions.comment-module.widgets.NotifySubscriptionWidget', 
+		$this->widget('ycomments.widgets.NotifySubscriptionWidget', 
 			array('commentableType' => $nu->commentable_type));
 	}
 	
@@ -73,15 +73,15 @@ class NotifyController extends CController
 		
 		if ($active) {
 			$ns->save();
-			Yii::app()->user->setFlash('user-notify', 'Подписка на комментарии выполнена.');
+			Yii::app()->user->setFlash('user-notify', YCommentsModule::t('Subscription performed'));
 		} else {
 			if (!$ns->isNewRecord) {
 				$ns->delete();
-				Yii::app()->user->setFlash('user-notify', 'Подписка отменена.');
+				Yii::app()->user->setFlash('user-notify', YCommentsModule::t('Subscription canceled'));
 			}
 		}
 
-		$this->widget('common.extensions.comment-module.widgets.NotifyItemSubscriptionWidget',
+		$this->widget('ycomments.widgets.NotifyItemSubscriptionWidget',
 				array('commentableType' => $ns->commentable_type, 'itemId' => $ns->item_id));
 	}
 	

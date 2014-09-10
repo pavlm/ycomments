@@ -3,11 +3,11 @@
 $wid = $this->id.'-'.time();
 $behavior = $this->getCommentableBehavior();
 ?>
-<div id="<?=$wid?>" class="notify-item-subscription" data-action="/comment/notify/itemSubscribe">
+<div id="<?=$wid?>" class="notify-item-subscription" data-action="/ycomments/notify/itemSubscribe">
 <?
-/* @var $form TbActiveFormExt */
-$form = $this->beginWidget('TbActiveFormExt', array(
-	'action'=>array('/comment/notify/itemSubscribe'),
+/* @var $form CActiveForm */
+$form = $this->beginWidget('CActiveForm', array(
+	'action'=>array('/ycomments/notify/itemSubscribe'),
 ));
 
 if (Yii::app()->user->hasFlash('user-notify'))

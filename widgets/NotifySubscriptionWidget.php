@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 
+ * Widget manages current user subscription options for specified commentableType
+ * @author pavl
+ *
+ */
 class NotifySubscriptionWidget extends CWidget
 {
 	public $commentableType;

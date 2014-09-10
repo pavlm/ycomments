@@ -340,5 +340,13 @@ class CommentableBehavior extends CActiveRecordBehavior
 	{
 	}
 	
+	/**
+	 * @return array
+	 */
+	public function getCommentableUrl() {
+		$c = $this->commentableUrl;
+		return $c($this->owner);
+	}
+	
 }
 

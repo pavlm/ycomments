@@ -38,5 +38,11 @@ return array(
 'Save' => 'Сохранить',
 'Save review' => 'Сохранить отзыв',
 'delete' => 'удалить',
+'Settings saved' => 'Настройки сохранены',
+'Subscription performed' => 'Подписка на комментарии выполнена',
+'Subscription canceled' => 'Подписка отменена',
+'Item subscriptions' => 'Подписки на материалы',
+'All messages subscription' => 'Подписка на все сообщения',
+'Replies to my messages' => 'Подписка на ответы к моим сообщениям',
 );
 
