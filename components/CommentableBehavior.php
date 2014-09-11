@@ -49,7 +49,7 @@ class CommentableBehavior extends CActiveRecordBehavior
 	
 	public $notifySubscriptionEnabled = false;
 	
-	public $notifyMailSubject = 'Новые комментарии';
+	public $notifyMailSubject = 'New comments';
 	
 	public $notifyMailFrom;
 	

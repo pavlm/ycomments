@@ -46,5 +46,6 @@ return array(
 'Replies to my messages' => 'Подписка на ответы к моим сообщениям',
 'Comments management' => 'Управление комментариями',
 'Subscription canceling can be done at your profile page' => 'Отписаться от рассылки вы можете на странице своего профиля',
+'New comments' => 'Новые комментарии',
 );
 

@@ -87,7 +87,7 @@ class NotifySender extends CComponent
 			return ($c->created_at > $res->created_at) ? $c : $res;
 		}, $cf);
 		$ng->last_check_at = $commentOldest->created_at;
-		if (!defined('YCOMMENT_DEBUG'))
+		if (!defined('YCOMMENTS_DEBUG'))
 			$ng->save();
 	}
 	
@@ -269,10 +269,13 @@ class NotifySender extends CComponent
 		$headers[] = "Content-Type: text/html; charset=UTF-8";
 		$subject = '=?UTF-8?B?'.base64_encode($subject).'?=';
 		$body = '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8" /></head><body>'.$body.'</body></html>';
-		if (defined('YCOMMENT_DEBUG') && YCOMMENT_DEBUG) {
+		if (defined('YCOMMENTS_DEBUG') && YCOMMENTS_DEBUG) {
 			$this->log(var_export(array('to' => $to, 'subject' => $subject, 'body' => $body), true));
 			return true;
 		}
-		return mail($to, $subject, $body, implode("\r\n",$headers)); 
+		if (!defined('YCOMMENTS_NOMAIL'))
+			return mail($to, $subject, $body, implode("\r\n",$headers));
+		else
+			return true; 
 	}
 }
