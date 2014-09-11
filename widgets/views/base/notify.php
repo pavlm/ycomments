@@ -31,5 +31,5 @@ endforeach;
 ?>
 
 <p>
-<?=YCommentsModule::t('Отписаться от рассылки вы можете на странице своего профиля.')?>
+<?=YCommentsModule::t('Subscription canceling can be done at your profile page')?>
 </p>

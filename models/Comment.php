@@ -33,9 +33,6 @@ class Comment extends CActiveRecord
 	public $childs = array();
 	public static $commentableType;
 	public static $commentLikeType = 'CommentLike';
-	public static $tagImgRegex = '#\[img\](?<url>[^\[\]]+)\[/img\]#';
-	public static $tagUrlRegex = '#\[url\](?<url>[^\[\]]+)\[/url\]#';
-	public static $tagVideoRegex = '#\[video\](?<url>[^\[\]]+)\[/video\]#';
 	
 	public function init()
 	{
@@ -102,8 +99,7 @@ class Comment extends CActiveRecord
 		return array(
 			array('message', 'required'),
 			array('message', 'length', 'max'=>2048),
-			array('message','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
-			array('message', 'validateTags'),
+			array('message','filter','filter'=>array($this,'htmlFilter')),
 			array('parent_id', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'numerical', 'integerOnly'=>true, 'allowEmpty' => true),
 			array('type', 'validateType', 'on'=>'create'),
@@ -113,6 +109,12 @@ class Comment extends CActiveRecord
 			array('id, message, user_id, parent_id', 'safe', 'on'=>'search'),
 			array('votes_up, votes_dn', 'unsafe'), // no mass assignment
 		);
+	}
+	
+	public function htmlFilter($value) {
+		$p = new CHtmlPurifier();
+		$p->setOptions(array('HTML.Allowed' => ''));
+		return $p->purify($value);
 	}
 
 	public function validateType()
@@ -136,50 +138,6 @@ class Comment extends CActiveRecord
 		}
 		if ($commentableModel->findByPk($this->key) === null) {
 			throw new CException('comment related record does not exist!');
-		}
-	}
-
-	public function validateTags()
-	{
-		$webroot = Yii::getPathOfAlias('webroot');
-		$behavior = $this->getCommentableBehavior();
-		if (!$behavior->allowTags) return;
-		$uv = new CUrlValidator();
-		if (preg_match_all(self::$tagUrlRegex, $this->message, $ms))
-		{
-			$urls = $ms['url'];
-			foreach ($urls as $url) {
-				if (!$uv->validateValue($url))
-					$this->addError('message', YCommentsModule::t('wrong address').' '.CHtml::encode($url));
-			}
-		}
-		if (preg_match_all(self::$tagImgRegex, $this->message, $ms))
-		{
-			$urls = $ms['url'];
-			foreach ($urls as $url) {
-				if (!$uv->validateValue($url))
-				{
-					// check relative img's
-					if ($url[0] == '/')
-					{
-						$src = $webroot.$url;
-						if (file_exists($src))
-							continue; // no error
-					}
-					$this->addError('message', YCommentsModule::t('wrong address').' '.CHtml::encode($url));
-				}
-			}
-		}
-		if (preg_match_all(self::$tagVideoRegex, $this->message, $ms))
-		{
-			$urls = $ms['url'];
-			foreach ($urls as $url) {
-				if (!($valid = $uv->validateValue($url)))
-					$this->addError('message', 'неверный адрес '.CHtml::encode($url));
-				$urla = parse_url($url);
-				if ($valid && strtolower($urla['host']) != 'www.youtube.com')
-					$this->addError('message', 'вставка видео только с сайта www.youtube.com');
-			}
 		}
 	}
 	
@@ -403,41 +361,11 @@ class Comment extends CActiveRecord
 			return 1;
 		return 1 + $pcomment->getLevel();
 	}
-
-	public function taggerVideo($match) {
-		list(,$url) = $match;
-		$urla = parse_url($url);
-		if (!preg_match('#v=(?<videoId>[^\&]+)#', @$urla['query'], $ms))
-			return $match[0];
-		$id = $ms['videoId'];
-		return "<iframe src=\"http://www.youtube.com/embed/{$id}?wmode=opaque\" type=\"text/html\" width=\"320\" height=\"240\" frameborder=\"0\"></iframe>";
-	}
-
-	public function taggerImg($match) {
-		list(,$url) = $match;
-		$relative = @$url[0] == '/';
-		$src = $relative ? Yii::app()->imager->getImageUrl($url, 'thumb210x130') : $url;
-		return '<div class="comment-img-block">'. 
-			CHtml::link( 
-				CHtml::image($src, '', !$relative ? array('class' => 'img210x130') : array()), 
-				$url, array('class' => 'comment-img-link', 'target' => '_blank') 
-			) .'</div>';
-	}
-
-	public function taggerUrl($match) {
-		list(,$url) = $match;
-		$text = strlen($url) < 40 ? $url : substr($url, 0, 39).'...';
-		return CHtml::link($text, $url);
-	}
 	
 	public function getMessageProcessed()
 	{
 		$root = Yii::getPathOfAlias('webroot');
 		$msg = nl2br($this->message);
-		if (\strpos($msg, '[') === false) return $msg; // early exit
-		$msg = preg_replace_callback(self::$tagImgRegex, array($this, 'taggerImg'), $msg);
-		$msg = preg_replace_callback(self::$tagUrlRegex, array($this, 'taggerUrl'), $msg);
-		$msg = preg_replace_callback(self::$tagVideoRegex, array($this, 'taggerVideo'), $msg);
 		return $msg;
 	}
 

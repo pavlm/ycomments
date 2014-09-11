@@ -1,4 +1,4 @@
-<h1>Управление комментариями</h1>
+<h1><?=YCommentsModule::t('Comments management')?></h1>
 <?php
 /* @var $this AdminController */
 /* @var $behavior CommentableBehavior */
